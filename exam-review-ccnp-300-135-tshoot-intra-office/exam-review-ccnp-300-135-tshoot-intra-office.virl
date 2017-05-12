@@ -6,7 +6,7 @@
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 11:03:57 UTC Thu May 4 2017
+! Last configuration change at 22:12:46 UTC Thu May 4 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -116,7 +116,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.118 255.255.0.0
+ ip address 10.255.5.129 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -145,7 +145,6 @@ interface GigabitEthernet1/3
  switchport mode trunk
  media-type rj45
  negotiation auto
- channel-group 1 mode active
 !
 interface Vlan1
  no ip address
@@ -242,7 +241,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:23:54 UTC Thu May 4 2017
+! Last configuration change at 17:21:13 UTC Fri May 5 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -343,7 +342,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.119 255.255.0.0
+ ip address 10.255.5.130 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -421,9 +420,6 @@ no ip http secure-server
 !
 !
 !
-!
-ip prefix-list SW2 seq 5 deny 2.0.0.0/8
-ip prefix-list SW2 seq 10 deny 2.2.2.2/32
 access-list 101 deny   ip host 192.168.1.20 host 224.0.0.9
 access-list 101 permit ip any any
 !
@@ -483,7 +479,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 05:02:30 UTC Thu May 4 2017
+! Last configuration change at 15:10:11 UTC Fri May 5 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -529,7 +525,7 @@ spanning-tree extend system-id
 !
 spanning-tree mst configuration
  name benpiper.com
- instance 1 vlan 100, 200
+ instance 1 vlan 100
 !
 spanning-tree mst hello-time 10
 spanning-tree mst max-age 30
@@ -582,7 +578,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.120 255.255.0.0
+ ip address 10.255.5.131 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -731,7 +727,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 09:30:11 UTC Thu May 4 2017
+! Last configuration change at 04:50:00 UTC Fri May 5 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -834,7 +830,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.121 255.255.0.0
+ ip address 10.255.5.132 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -909,7 +905,6 @@ no ip http secure-server
 ip route 55.0.0.0 255.0.0.0 Null0
 ip route 55.55.0.0 255.255.0.0 Null0
 ip route 55.55.55.0 255.255.255.0 Null0
-ip route 192.168.2.0 255.255.255.0 Null0
 ip route 192.168.3.0 255.255.255.0 Null0
 !
 !
@@ -969,7 +964,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 09:03:58 UTC Thu May 4 2017
+! Last configuration change at 17:04:15 UTC Fri May 5 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -1015,6 +1010,10 @@ ip dhcp pool wrongpool
 no ip domain-lookup
 ip cef
 no ipv6 cef
+!
+key chain twohundred
+ key 1
+  key-string Pluralsight
 !
 !
 !
@@ -1072,7 +1071,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.122 255.255.0.0
+ ip address 10.255.5.133 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -1120,14 +1119,17 @@ interface Vlan100
 !
 interface Vlan200
  ip address 10.0.0.50 255.255.255.0
+ ip rip authentication key-chain twohundred
  arp timeout 300
 !
 router rip
  version 2
  redistribute static metric 0
  passive-interface default
+ no passive-interface Vlan200
  network 10.0.0.0
  network 55.0.0.0
+ no auto-summary
 !
 ip forward-protocol nd
 !
@@ -1191,7 +1193,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 09:04:45 UTC Thu May 4 2017
+! Last configuration change at 03:57:30 UTC Fri May 5 2017
 !
 version 15.2
 service timestamps debug datetime msec
@@ -1213,7 +1215,6 @@ vrf definition Mgmt-intf
  address-family ipv6
  exit-address-family
 !
-no logging console
 enable password cisco
 !
 no aaa new-model
@@ -1304,7 +1305,7 @@ interface GigabitEthernet0/0
  description OOB management
  no switchport
  vrf forwarding Mgmt-intf
- ip address 10.255.5.123 255.255.0.0
+ ip address 10.255.5.134 255.255.0.0
  negotiation auto
 !
 interface GigabitEthernet1/0
@@ -1376,16 +1377,20 @@ interface Vlan1
 !
 interface Vlan100
  ip address 192.168.1.60 255.255.255.0
+ ip rip advertise 15
  arp timeout 300
 !
 interface Vlan200
  ip address 10.0.0.60 255.255.255.0
+ ip rip advertise 15
  ip rip authentication key-chain twohundred
  arp timeout 300
 !
 router rip
  version 2
+ timers basic 15 180 180 240
  network 10.0.0.0
+ network 192.168.1.0
 !
 ip forward-protocol nd
 !
@@ -1451,7 +1456,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 16:07:41 UTC Thu May 4 2017
+! Last configuration change at 04:01:31 UTC Fri May 5 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -1533,19 +1538,16 @@ interface Loopback0
  ip address 192.168.0.3 255.255.255.255
  ip rip advertise 10
 !
-interface Loopback2
- ip address 192.168.2.252 255.255.255.0
- ip rip advertise 10
-!
 interface Tunnel12
  ip address 12.12.12.2 255.255.255.0
+ ip rip advertise 10
  tunnel source 10.0.0.2
  tunnel destination 192.168.1.1
 !
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.5.117 255.255.0.0
+ ip address 10.255.5.128 255.255.0.0
  duplex full
  speed auto
  media-type rj45
@@ -1637,8 +1639,8 @@ interface GigabitEthernet0/12
  media-type rj45
 !
 interface GigabitEthernet0/13
- ip address 192.168.3.254 255.255.255.0
- ip helper-address 10.0.0.50
+ ip address 192.168.2.2 255.255.255.0
+ ip helper-address 10.0.0.60
  ip nat enable
  ip rip advertise 10
  duplex auto
@@ -1654,7 +1656,7 @@ router rip
  network 192.168.1.0
  network 192.168.2.0
  network 192.168.3.0
- distance 120 12.12.12.1 0.0.0.0
+ distance 255 12.12.12.1 0.0.0.0
 !
 router bgp 1
  bgp router-id 192.168.0.3
@@ -1733,7 +1735,7 @@ end</entry>
             <entry key="AutoNetkit.IGP" type="String">rip-v2</entry>
             <entry key="AutoNetkit.vrf" type="String">willyoupass</entry>
             <entry key="config" type="String">!
-! Last configuration change at 16:32:02 UTC Thu May 4 2017
+! Last configuration change at 18:14:37 UTC Thu May 4 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -1832,7 +1834,7 @@ interface Tunnel12
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.5.116 255.255.0.0
+ ip address 10.255.5.127 255.255.0.0
  duplex full
  speed auto
  media-type rj45
