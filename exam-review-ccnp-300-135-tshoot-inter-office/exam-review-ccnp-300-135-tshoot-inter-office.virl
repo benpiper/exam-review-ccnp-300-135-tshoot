@@ -610,7 +610,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:03:01 UTC Thu May 18 2017
+! Last configuration change at 16:24:08 UTC Thu May 18 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -843,8 +843,15 @@ ipv6 router eigrp 1337
 !
 ipv6 router ospf 1
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
- redistribute eigrp 1337 include-connected
+ redistribute eigrp 1337 tag 3 route-map rm_eigrp-&gt;ospf include-connected
 !
+!
+!
+ipv6 prefix-list pl_eigrp seq 5 deny ::/0
+route-map rm_eigrp-&gt;ospf permit 10
+ match ipv6 address prefix-list pl_eigrp
+!
+route-map rm_eigrp-&gt;sopf permit 10
 !
 !
 !
@@ -905,7 +912,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 14:59:38 UTC Thu May 18 2017
+! Last configuration change at 16:25:01 UTC Thu May 18 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -1177,8 +1184,21 @@ ipv6 router eigrp 1337
 !
 ipv6 router ospf 1
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
- redistribute eigrp 1337 include-connected
+ redistribute eigrp 1337 metric-type 1 tag 4 route-map rm_eigrp-&gt;ospf include-connected
 !
+!
+!
+ipv6 prefix-list eigrp seq 5 permit ::/0
+!
+ipv6 prefix-list eigrp-&gt;ospf seq 5 permit ::/0
+!
+ipv6 prefix-list pl_eigrp seq 5 deny ::/0
+route-map rm_eigrp-&gt;ospf permit 10
+ match ipv6 address prefix-list pl_eigrp
+ set metric-type type-1
+ set tag 4
+!
+route-map eigrp-&gt;ospf permit 10
 !
 !
 !
