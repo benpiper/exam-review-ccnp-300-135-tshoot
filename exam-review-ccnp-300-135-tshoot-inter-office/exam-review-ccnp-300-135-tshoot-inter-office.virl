@@ -4,7 +4,7 @@
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:05:28 UTC Thu May 18 2017
+! Last configuration change at 17:45:33 UTC Thu May 18 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -254,6 +254,7 @@ no ip http secure-server
 ip ssh server algorithm authentication password
 !
 ipv6 router ospf 1
+ area 112 range 8::8/128 not-advertise
  area 112 virtual-link 3.3.3.3
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
 !
@@ -311,7 +312,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 01:55:05 UTC Thu May 18 2017
+! Last configuration change at 17:43:07 UTC Thu May 18 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -554,6 +555,7 @@ no ip http secure-server
 ip ssh server algorithm authentication password
 !
 ipv6 router ospf 1
+ area 112 stub no-summary
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
 !
 !
