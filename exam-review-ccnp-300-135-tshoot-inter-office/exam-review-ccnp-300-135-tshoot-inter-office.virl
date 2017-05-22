@@ -914,7 +914,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 14:28:08 UTC Fri May 19 2017
+! Last configuration change at 15:01:09 UTC Mon May 22 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -998,7 +998,7 @@ interface Loopback0
 interface GigabitEthernet0/0
  description OOB Management
  vrf forwarding Mgmt-intf
- ip address 10.255.5.203 255.255.0.0
+ ip address 10.255.5.233 255.255.0.0
  duplex full
  speed auto
  media-type rj45
@@ -1066,7 +1066,6 @@ interface GigabitEthernet0/7
  ipv6 address FE80::4 link-local
  ipv6 address 47::4/64
  ipv6 eigrp 1337
- ipv6 authentication mode eigrp 1337 md5
  ipv6 authentication key-chain eigrp 1337 kc_eigrp
 !
 interface GigabitEthernet0/8
