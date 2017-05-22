@@ -312,7 +312,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 17:43:07 UTC Thu May 18 2017
+! Last configuration change at 13:36:41 UTC Fri May 19 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -555,7 +555,7 @@ no ip http secure-server
 ip ssh server algorithm authentication password
 !
 ipv6 router ospf 1
- area 112 stub no-summary
+ area 112 nssa no-summary
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
 !
 !
@@ -914,7 +914,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 16:25:01 UTC Thu May 18 2017
+! Last configuration change at 14:28:08 UTC Fri May 19 2017
 !
 version 15.6
 service timestamps debug datetime msec
@@ -1034,6 +1034,7 @@ interface GigabitEthernet0/4
  ipv6 address FE80::4 link-local
  ipv6 address 24::4/64
  ipv6 ospf 1 area 0
+ ipv6 ospf cost 2
 !
 interface GigabitEthernet0/5
  no ip address
@@ -1182,7 +1183,7 @@ no ip http secure-server
 ip ssh server algorithm authentication password
 !
 ipv6 router eigrp 1337
- redistribute ospf 1 metric 1000000 1 255 1 1500 include-connected
+ redistribute ospf 1 route-map rm_ospf-&gt;eigrp include-connected
 !
 ipv6 router ospf 1
  area 0 authentication ipsec spi 256 sha1 ABCDEF1234567890ABCDABCDEF1234567890ABCD
@@ -1195,10 +1196,17 @@ ipv6 prefix-list eigrp seq 5 permit ::/0
 ipv6 prefix-list eigrp-&gt;ospf seq 5 permit ::/0
 !
 ipv6 prefix-list pl_eigrp seq 5 deny ::/0
+!
+ipv6 prefix-list pl_ospf seq 5 permit ::/0
+ipv6 prefix-list pl_ospf seq 10 permit 11::11/128
 route-map rm_eigrp-&gt;ospf permit 10
  match ipv6 address prefix-list pl_eigrp
  set metric-type type-1
  set tag 4
+!
+route-map rm_ospf-&gt;eigrp permit 10
+ match ipv6 address prefix-list pl_ospf
+ set metric 100000 1 255 1 1500
 !
 route-map eigrp-&gt;ospf permit 10
 !
@@ -2076,7 +2084,7 @@ end</entry>
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 15:09:47 UTC Thu May 18 2017
+! Last configuration change at 13:51:14 UTC Fri May 19 2017
 !
 version 15.6
 service timestamps debug datetime msec
